@@ -10,7 +10,7 @@ public:
         while(j<n){
             target = nums[j];
             curr+=nums[j];
-            while((j-i+1)*target - curr>k){
+            if((j-i+1)*target - curr>k){
                 curr-=nums[i];
                 i++;
             }
