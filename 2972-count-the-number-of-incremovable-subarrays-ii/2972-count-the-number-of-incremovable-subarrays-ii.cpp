@@ -22,7 +22,8 @@ public:
             return ((n)*(n+1))/2;
         }
         ll count = (n-rightIdx+1) + (leftIdx+1);
-// Binary Search :-------
+// Binary Search :------- O(NlogN)
+        // ll count = (n-rightIdx+1)
         // for(ll i=0;i<=leftIdx;i++){
         //     ll idxOnRight = upper_bound(nums.begin()+rightIdx,nums.end(),nums[i]) - nums.begin();
         //     count+=n-idxOnRight+1;
