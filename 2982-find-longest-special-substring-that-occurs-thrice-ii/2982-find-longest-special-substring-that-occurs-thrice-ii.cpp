@@ -41,12 +41,9 @@ public:
         // return ans<=0?-1:ans;
         
         // Simple and Most Optimised Solution :- TC:- O(26*N)  SC:- O(1)
-        for(char cc = 'a';cc<='z';cc++){
-            int m1 = 0,m2 = 0,m3 = 0;
-            for(int i=0;i<n;i++){
-                if(s[i]!=cc){
-                    continue;
-                }
+        vector<vector<int>> temp(26,vector<int>(3));
+            for(int i=0;i<n;){
+                int &m1 = temp[s[i]-'a'][0],&m2 = temp[s[i]-'a'][1],&m3 = temp[s[i]-'a'][2];
                 int cnt = 0;
                 int j = i;
                 for(;j<n&&s[i]==s[j];j++){
@@ -63,10 +60,9 @@ public:
                     }
                 }
                 i = j;
-                
+                ans = max(ans,m1);
             }
-            ans = max(ans,m1);
-        }
+            
         return ans==0?-1:ans;
         
     }
