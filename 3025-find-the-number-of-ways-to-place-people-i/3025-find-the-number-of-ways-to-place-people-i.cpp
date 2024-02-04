@@ -31,9 +31,7 @@ public:
                                 break;
                             }
                             if(x==x1&&x==x2){
-                                int mini = min(y1,y2);
-                                int maxi = max(y1,y2);
-                                if(y>=mini&&y<=maxi){
+                                if(y>=y2&&y<=y1){
                                     flag = false;
                                     break;
                                 }
