@@ -3,8 +3,8 @@ public:
     int minimumOperationsToWriteY(vector<vector<int>>& grid) {
         int n = grid.size();
         int mid = n/2;
-        unordered_map<int,int> mpy;
-        unordered_map<int,int> mpo;
+        unordered_map<int,int> mpy,mpo;
+        
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 //calculation for Y
@@ -29,23 +29,34 @@ public:
             }
         }
         
+        //remaining cell ka count
+        
         int total1 = mpo[0] + mpo[1] + mpo[2];
+        
+        //Y ka count
         int total2 = mpy[1] + mpy[2] + mpy[0];
         
-        int mn = INT_MAX;
+        int ans = INT_MAX;
         
         for(auto it:mpy){
+            //y ke saare number ke liye dekhenge
             int num = it.first;
             int cnt = it.second;
+            // operations Y ke liye
             int ans1 = total2 - cnt;
             for(auto kt:mpo){
+                // jo y ke number se match krr jaye usko skip krr denge 
+                //bacche hue ke liye ans nikal lenge
                 if(kt.first==it.first) continue;
                 int numx = kt.first;
                 int cntx = kt.second;
+                 // operations remaining part ke liye
                 int ans2 = total1 - cntx;
-                mn = min(mn,ans1 + ans2);
+                ans = min(ans,ans1 + ans2);
             }  
         }
-        return mn;  
+        return ans;  
+        
+        //TC:- O(N^2)
     }
 };
