@@ -1,7 +1,7 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-typedef tree<pair<int,int>, null_type, less<pair<int,int>>, rb_tree_tag,
+typedef tree<int, null_type, greater_equal<int>, rb_tree_tag,
              tree_order_statistics_node_update>
     ordered_set;
 
@@ -13,27 +13,25 @@ public:
         vector<int> arr1,arr2,ans;
         arr1.push_back(nums[0]);
         arr2.push_back(nums[1]);
-        os1.insert({nums[0],0});
-        os2.insert({nums[1],1});
+        os1.insert(nums[0]);
+        os2.insert(nums[1]);
         
         for(int i=2;i<n;i++){
             int val = nums[i];
-            int a = os1.order_of_key({val+1,0});
-            int b = os2.order_of_key({val+1,0});
-            int len1 = arr1.size()-a;
-            int len2 = arr2.size()-b;
-            if(len1>len2){
-                os1.insert({val,i});
+            int a = os1.order_of_key(val);
+            int b = os2.order_of_key(val);
+            if(a>b){
+                os1.insert(val);
                 arr1.push_back(val);
-            }else if(len1<len2){
-                os2.insert({val,i});
+            }else if(a<b){
+                os2.insert(val);
                 arr2.push_back(val);
-            }else if(len1==len2){
+            }else if(a==b){
                 if(os1.size()<=os2.size()){
-                  os1.insert({val,i});
+                  os1.insert(val);
                   arr1.push_back(val);   
                 }else{
-                    os2.insert({val,i});
+                    os2.insert(val);
                     arr2.push_back(val);
                 }
             }
