@@ -13,14 +13,20 @@ public:
     bool isPalindrome(ListNode* head) {
         return check(head, head);
     }
-    
-    bool check(ListNode*& head, ListNode* p) {
-        if(!p) { return true; }
-        bool isPal = check(head, p->next);
-        if(head->val != p->val) {
-            return false;
-        }
-        head = head->next;
+//     bool check(ListNode*& head, ListNode* p) {
+//     if(!p) { return true; }
+//     bool isPal = check(head, p->next);
+//     if(!isPal || head->val != p->val) {
+//         return false;
+//     }
+//     head = head->next;
+//     return isPal;
+// }
+    bool check(ListNode* &p, ListNode* q){
+        if(!q) return true;
+        bool isPal = check(p,q->next);
+        if(p->val!=q->val) return false;
+        p = p->next;
         return isPal;
     }
 };
