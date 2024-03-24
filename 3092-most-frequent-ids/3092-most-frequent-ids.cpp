@@ -6,7 +6,6 @@ public:
         vector<long long> res;
         priority_queue<pair<long long,int>> pq;
         for(int i=0;i<n;i++){
-            long long ans = INT_MIN;
             mp[nums[i]]+=freq[i];
             pq.push({mp[nums[i]],nums[i]});
             while(!pq.empty()&&mp[pq.top().second]!=pq.top().first){
