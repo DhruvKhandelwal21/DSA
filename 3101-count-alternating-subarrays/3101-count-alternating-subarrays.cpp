@@ -6,7 +6,7 @@ public:
         int n = nums.size();
         while(j<n){
             if(nums[j]==nums[j-1]){
-                int len = j-i;
+                long long len = j-i;
                 long long temp = (len*(len+1))/2;
                 ans+=temp;
                 i = j;
