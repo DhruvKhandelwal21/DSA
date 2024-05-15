@@ -18,23 +18,20 @@ public:
         q.push(root);
         bool flag = false;
         while(!q.empty()){
-            vector<int> temp;
             int sz = q.size();
+            vector<int> temp(sz);
             for(int i=0;i<sz;i++){
                 TreeNode* node = q.front();
                 q.pop();
+                int idx = flag ? sz-1-i : i;
+                temp[idx] = node->val;
                 if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
-                temp.push_back(node->val);
             }
-            if(flag){
-                reverse(temp.begin(),temp.end());
+            
                 ans.push_back(temp);
-                flag = false;
-            }else{
-                ans.push_back(temp);
-                flag = true;
-            }
+                flag = !flag;
+            
         }
         return ans;
     }
