@@ -1,52 +1,35 @@
 class Solution {
 public:
-    typedef pair<int, pair<int, int>> P;
-    vector<vector<int>> directions = {{-1,0}, {0,-1},{0,1},{1, 0}};
-   // Interesting right :-) 
-    
+    typedef pair<int,pair<int,int>> p;
     int minimumEffortPath(vector<vector<int>>& heights) {
-        int m = heights.size();
-        int n = heights[0].size();
+        int n = heights.size();
+        int m = heights[0].size();
+        vector<vector<int>> dist(n, vector<int> (m, INT_MAX));
+        // dist[0][0] = 0;
+        priority_queue<p,vector<p>, greater<p>> pq;
+        pq.push({0,{0,0}});
+        vector<int> x = {-1, 0, 1, 0};
+        vector<int> y = {0, 1, 0, -1};
         
-        auto isSafe = [&](int x, int y) {
-            return x>=0 && x<m && y>=0 && y<n;
-        };
-        
-        vector<vector<int>> result(m, vector<int>(n, INT_MAX));
-        priority_queue<P, vector<P>, greater<P>> pq;
-        
-        pq.push({0, {0, 0}});
-        result[0][0] = 0;
-  
-        while(!pq.empty()) {
-            int diff  = pq.top().first;
-            auto node = pq.top().second;
+        while(!pq.empty()){
+            auto cell = pq.top();
             pq.pop();
-
-            int x = node.first;
-            int y = node.second;
-            
-            //Why returning now ?
-            //Because there is no way that the rest of elements can update the weight of destination cell even smaller due to the min heap.
-            if(x == m-1 && y == n-1)
-                return diff;
-            
-	    for(auto dir:directions) {
-		int x_   = x + dir[0];
-		int y_   = y + dir[1];
-
-		if(isSafe(x_, y_)) {
-
-		    int newDiff = max(diff, abs(heights[x][y] - heights[x_][y_]));
-		    if(result[x_][y_] > newDiff) {
-			result[x_][y_] = newDiff;
-			pq.push({result[x_][y_], {x_, y_}});
-		    }
-		}
-	     }
+            pair<int,int> celloc = cell.second;
+            int celldist = cell.first;
+            for(int i=0;i<4;i++){
+                int prevx = celloc.first;
+                int prevy = celloc.second;
+                int currx = prevx + x[i];
+                int curry = prevy + y[i];
+                if(currx>=0 && currx<n && curry>=0 && curry<m){
+                    int curreffort = max(celldist, abs(heights[currx][curry] - heights[prevx][prevy]));
+                    if(curreffort<dist[currx][curry]){
+                      dist[currx][curry] = curreffort;
+                      pq.push({curreffort, {currx, curry}});  
+                    }
+                }
+            }
         }
-   
-        return result[m-1][n-1];
-
+     return dist[n-1][m-1]==INT_MAX ? 0 : dist[n-1][m-1];
     }
 };
