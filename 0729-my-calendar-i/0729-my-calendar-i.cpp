@@ -10,24 +10,17 @@ public:
         if(cal.size()==0){
             cal.push_back({start, end});
             return true;
-        } else if(cal[0].first>=end){
-            cal.insert(cal.begin(),{start,end});
-            return true;
-        } else if(cal[n-1].second<=start){
-            cal.push_back({start, end});
-            return true;
-        }else {
-           for(int i=1;i<cal.size();i++){
-            int st = cal[i-1].second;
-            int en = cal[i].first;
-            if(start>=st && end<=en){
-                cal.push_back({start,end});
-                sort(cal.begin(),cal.end());
-                return true;
+        } else {
+           for(int i=0;i<cal.size();i++){
+            int st = cal[i].first;
+            int en = cal[i].second;
+            if(min(en,end)>max(st,start)){
+                return false;
             } 
-          } 
+          }
         }
-     return false;   
+     cal.push_back({start,end});
+     return true;
     }
 };
 
