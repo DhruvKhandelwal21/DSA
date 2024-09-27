@@ -1,32 +1,34 @@
 class MyCalendarTwo {
 public:
     vector<pair<int,int>> reserve;
-    unordered_map<int,int> mp;
     MyCalendarTwo() {
         
     }
-    
+    bool check(int st,int ed){
+        int cnt = 0;
+        for(int j=0;j<reserve.size();j++){
+                    int s = reserve[j].first;
+                    int e = reserve[j].second;
+                    if(max(s,st)<min(e,ed)){
+                        cnt++;
+                    }
+                }
+        if(cnt>=2) return true;
+        return false;
+    }
     bool book(int start, int end) {
         if(reserve.size()==0){
             reserve.push_back({start, end});
+            return true;
         }else{
-            bool check = true;
             for(int i=0;i<reserve.size();i++){
                 int st = reserve[i].first;
                 int ed = reserve[i].second;
-                if(max(start,st)<min(ed,end)){
-                    if(check){
-                      for(auto it: mp){
-                        int mst = it.first;
-                        int mnd = it.second;
-                        if(max(start,mst)<min(mnd,end)){
-                            return false;
-                    }
-                }  
-            }
-             check = false;      
-             mp[max(start,st)] = min(ed,end);
-            }
+                int x = max(start,st);
+                int y = min(ed,end);
+                if(x<y){
+                if(check(x,y)) return false;   
+            }   
         }
     }
 reserve.push_back({start, end});
