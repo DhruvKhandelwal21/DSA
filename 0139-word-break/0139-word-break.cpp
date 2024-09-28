@@ -22,6 +22,18 @@ public:
         int n = s.size();
         vector<int> dp(n+1,-1);
         dp[n] = true;
-        return solve(s,0,n, dp);
+        
+        for(int i=n-1;i>=0;i--){
+            string temp = "";
+            bool ans = false;
+            for(int j=i;j<n;j++){
+                temp.push_back(s[j]);
+                if(st.count(temp)){
+                    ans = ans || dp[j+1];
+                }
+            }
+            dp[i] = ans;
+        }
+        return dp[0];
     }
 };
