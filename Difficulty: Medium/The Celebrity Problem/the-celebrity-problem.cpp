@@ -13,24 +13,24 @@ class Solution {
     // Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& mat) {
         int n = mat.size();
-        vector<vector<int>> graph(n);
-        vector<int> indegrees(n);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(i!=j && mat[i][j]==1){
-                    graph[i].push_back(j);
-                }
+        int i=0, j = n-1;
+        int celeb = -1;
+        while(i<j){
+            if(mat[i][j]==1){
+                i++;
+            } else if(mat[j][i]==1){
+                j--;
+            }else{
+                i++;
+                j--;
             }
         }
-        for(int i=0;i<n;i++){
-            for(auto it: graph[i]){
-                indegrees[it]++;
-            }
+        if(i>j) return -1;
+        for(int idx= 0;idx<n;idx++){
+            if(idx==i) continue;
+            if(mat[idx][i]==0 || mat[i][idx]==1) return -1;
         }
-        for(int i=0;i<n;i++){
-            if(graph[i].size()==0 && indegrees[i]==n-1) return i;
-        }
-        return -1;
+        return i;
     }
 };
 
