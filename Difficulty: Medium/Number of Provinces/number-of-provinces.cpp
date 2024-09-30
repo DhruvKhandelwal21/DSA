@@ -56,28 +56,39 @@ class DisjointSet {
 	};
 class Solution {
   public:
+    void dfs(int node, vector<vector<int>> &graph, vector<int> &vis){
+        vis[node] = 1;
+        for(auto it: graph[node]){
+            if(!vis[it]){
+                dfs(it, graph, vis);
+            }
+        }
+    }
+    
     int numProvinces(vector<vector<int>> adj, int V) {
-        DisjointSet ds(V);
+        // DisjointSet ds(V);
         int n = adj.size();
         int m = adj[0].size();
-        unordered_set<int> st;
+        int mx = max(n,m);
+        vector<vector<int>> graph(mx);
+        vector<int> vis(mx,0);
+        int cnt = 0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(adj[i][j]==1){
-                    ds.unionBySize(i,j);
+                if(adj[i][j]==1 && i!=j){
+                    graph[i].push_back(j);
                 }
             }
         }
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(adj[i][j]==1){
-                    int pr = ds.findUpar(i);
-                    st.insert(pr);
-                }
+        for(int i=0;i<mx;i++){
+            if(!vis[i]){
+                dfs(i,graph,vis);
+                cnt++;
             }
         }
-        return st.size();
+        
+        return cnt;
     }
 };
 
