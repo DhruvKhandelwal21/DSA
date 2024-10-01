@@ -1,47 +1,47 @@
 class Solution {
 public:
+    vector<int> x = {-1,0,1,0};
+    vector<int> y = {0,-1,0,1};
+    
+    void dfs(vector<vector<char>>& board, int i, int j, int &n, int &m){
+        if(i<0 || j<0 || i>=n || j>=m || board[i][j]=='Y' || board[i][j]=='X') return;
+        board[i][j]='Y';
+        for(int k=0;k<4;k++){
+            int currx = x[k] + i;
+            int curry = y[k] + j;
+            dfs(board,currx,curry,n,m);
+        }
+    }
     void solve(vector<vector<char>>& board) {
         int m = board[0].size();
         int n = board.size();
-        queue<pair<int,int>> q;
         for(int j=0;j<m;j++){
-            if(board[0][j]=='O'){ 
-                board[0][j] = 'Y';
-                q.push({0,j});
+            if(board[0][j]=='O'){
+                dfs(board,0,j,n,m);
              }
             
-            if(board[n-1][j]=='O'){ 
-                board[n-1][j] = 'Y';
-                q.push({n-1,j});
+            if(board[n-1][j]=='O'){
+                dfs(board,n-1,j,n,m);
             }
         }
         
         for(int j=0;j<n;j++){
-            if(board[j][0]=='O'){ 
-                board[j][0] = 'Y';
-                q.push({j,0});
+            if(board[j][0]=='O'){
+                dfs(board,j,0,n,m);
             }
             if(board[j][m-1]=='O'){
-                board[j][m-1] = 'Y';
-                q.push({j,m-1});
+                dfs(board,j,m-1,n,m);
             }
         }
         
-        vector<int> x = {-1,0,1,0};
-        vector<int> y = {0,-1,0,1};
-        
-        while(!q.empty()){
-            auto [a,b] = q.front();
-            q.pop();
-            for(int i=0;i<4;i++){
-                int currx = a+x[i];
-                int curry = b+y[i];
-        if(currx>=0 && curry>=0 && currx<n && curry<m && board[currx][curry]=='O'){
-                    board[currx][curry] = 'Y';
-                    q.push({currx,curry});
-             }
-            }
-        }
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         if(board[i][j]=='Y'){
+        //             dfs(board,i,j);
+        //         }
+        //     }
+        // }
+
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(board[i][j]=='O'){ 
