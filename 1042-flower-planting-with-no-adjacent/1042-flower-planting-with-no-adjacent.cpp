@@ -41,6 +41,7 @@ class Solution
                             if (v[i] == -1)
                             {
                                 flower[garden] = i;
+                                break;
                             }
                         }
                     }
