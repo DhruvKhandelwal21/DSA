@@ -28,21 +28,16 @@ public:
                 }
             }
         }
-        vector<int> ans;
-        for(int k=1;k<=n;k++){
-            int cnt = 0;
+        vector<int> ans(n,0);
+       
             for(int i=1;i<=n;i++){
             for(int j=1;j<=n;j++){
                 if(i!=j){
-                    if(mat[i][j]==k){
-                     cnt++;   
+                     ans[mat[i][j]-1]++;
                     }
                 }
             }
-        }
-            ans.push_back(cnt);
-        }
-        
+               
         return ans;
     }
 };
