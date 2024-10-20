@@ -39,7 +39,7 @@ public:
        
 
         for (int i = n - 2; i >= 0; --i) {
-            while (nums[i] > nums[i + 1]) {
+            if (nums[i] > nums[i + 1]) {
                 int gpd = greatestProperDivisor(nums[i]);
                 if (gpd == 1) {
                     
@@ -47,7 +47,7 @@ public:
                 }
                 nums[i] = nums[i] / gpd; 
                 ans++;
-                if (nums[i] == 1 && nums[i] > nums[i + 1]) {
+                if (nums[i] > nums[i + 1]) {
                   
                     return -1;
                 }
