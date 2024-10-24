@@ -1,15 +1,19 @@
 class Solution {
 public:
     typedef pair<int,int> p;
+   // std::vector<int> dp(20001,-1);
     int MOD=1e9+7;
     int dfs(vector<vector<pair<int,int>>> &graph, vector<int> &dist, vector<int> &dp, int node, int end){
         long long int ans = 0;
         if(node==end) return 1;
-        if(dp[node]!=-1)
-            return dp[node];
+      
         for(auto it: graph[node]){
             if(it.first!=node && dist[node]>dist[it.first]){
-                    ans= (ans + dfs(graph,dist,dp, it.first, end))%MOD;   
+                if(dp[it.first]!=-1){
+                    ans=(ans+dp[it.first])%MOD;
+                }else {
+                    ans=(ans+dfs(graph,dist,dp, it.first, end))%MOD;
+                }
             }
         }
         return dp[node] = ans;
