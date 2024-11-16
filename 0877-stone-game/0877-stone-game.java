@@ -13,14 +13,15 @@ class Solution {
         return dp[i][j] = Math.max(lsum, rsum);
     }
     public boolean stoneGame(int[] piles) {
-        int n = piles.length;
-        int [][] dp = new int [n][n];
-        int sum = 0;
-        for(int i=0;i<n;i++){
-            sum+=piles[i];
-            Arrays.fill(dp[i],-1);
-        }
-        int alexSum = solve(piles,0,n-1,dp);
-        return alexSum > (sum-alexSum);
+        // int n = piles.length;
+        // int [][] dp = new int [n][n];
+        // int sum = 0;
+        // for(int i=0;i<n;i++){
+        //     sum+=piles[i];
+        //     Arrays.fill(dp[i],-1);
+        // }
+        // int alexSum = solve(piles,0,n-1,dp);
+        // return alexSum > (sum-alexSum);
+        return true;
     }
 }
