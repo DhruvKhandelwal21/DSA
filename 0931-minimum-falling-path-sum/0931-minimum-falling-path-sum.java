@@ -30,7 +30,20 @@ class Solution {
         }
         int ans = Integer.MAX_VALUE;
         for(int i=0;i<m;i++){
-            ans = Math.min(ans, solve(matrix, n-1, i, m, dp));
+            dp[0][i] = matrix[0][i];
+        }
+        for(int i=1;i<n;i++){
+            for(int j=0;j<m;j++){
+                int top,topleft = Integer.MAX_VALUE,topright = Integer.MAX_VALUE;
+             top = matrix[i][j] + dp[i-1][j];
+            if(j-1>=0) topleft =  matrix[i][j] + dp[i-1][j-1];
+            if(j+1<m)  topright =  matrix[i][j] + dp[i-1][j+1]; 
+         dp[i][j] = Math.min(top,Math.min(topleft,topright));
+            }
+        }
+        // for(int i=0;i<m;i++){
+            
+            // ans = Math.min(ans, solve(matrix, n-1, i, m, dp));
             // for(int k=-1;k<=1;k++){
             //     int idx = i+k;
             //     if(idx>=0 && idx<=m-1){
@@ -38,7 +51,11 @@ class Solution {
             //        ans = Math.min(ans, temp); 
             //     }
             // }
-        }
+        // }
+      
+       for(int i=0;i<m;i++){
+           ans = Math.min(ans, dp[n-1][i]);
+       }
         return ans;
     }
 }
