@@ -15,9 +15,19 @@ class Solution {
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
         int ans = Integer.MAX_VALUE;
+        dp[0][0] = triangle.get(0).get(0);
+        for(int i=1;i<triangle.size();i++){
+            for(int j=0;j<triangle.get(i).size();j++){
+                int top = Integer.MAX_VALUE, topLeft = Integer.MAX_VALUE;
+                top = dp[i-1][j];
+                if(j-1>=0) topLeft = dp[i-1][j-1];
+                dp[i][j] = triangle.get(i).get(j) + Math.min(top, topLeft);
+            }
+        }
         for(int i=0;i<triangle.get(n-1).size();i++){
-            ans = Math.min(ans, solve(triangle, n-1, i, dp));
+         ans = Math.min(ans, dp[n-1][i]);   
         }
         return ans;
+        // ans = Math.min(ans, solve(triangle, n-1, i, dp));
     }
 }
