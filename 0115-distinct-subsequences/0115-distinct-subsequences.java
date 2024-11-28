@@ -4,18 +4,32 @@ class Solution {
         if(i<0) return 0;
         if(dp[i][j]!=-1) return dp[i][j];
         int ans = 0;
-        if(s.charAt(i)==t.charAt(j)){
-            ans = solve(s,t, i-1, j-1, dp) + solve(s,t,i-1,j,dp);
-        }else{
-            ans = solve(s,t,i-1,j,dp);
+        for(int k=i;k>=0;k--){
+            if(s.charAt(k)==t.charAt(j)){
+                if(k>0 && j>0 && dp[k-1][j-1]!=-1){
+                    ans+=dp[k-1][j-1];
+                }else{
+                  ans+=solve(s,t,k-1,j-1,dp);  
+                }
+            }
         }
+        // if(s.charAt(i)==t.charAt(j)){
+        //     ans = solve(s,t, i-1, j-1, dp) + solve(s,t,i-1,j,dp);
+        // }else{
+        //     ans = solve(s,t,i-1,j,dp);
+        // }
         // for(int k = i;k>=0;k--){
         //     if(s.charAt(k)==t.charAt(j)){
-        //         ans+=solve(s,t,k-1,j-1,dp);
+        //       if(dp[k-1][j-1]==-1]){
+        //          ans+=solve(s,t,k-1,j-1,dp);   
+        //         }else{
+        //             ans+=dp[k-1][j-1];
+        //         }
         //     }
-        // }
-        return dp[i][j] = ans;
-     }
+        //     }
+            return dp[i][j] = ans;
+    }
+
     public int numDistinct(String s, String t) {
         int n = s.length();
         int m = t.length();
