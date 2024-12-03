@@ -1,15 +1,13 @@
 class Solution {
 public:
     string addSpaces(string s, vector<int>& spaces) {
-        unordered_set<int> st;
-        for(auto it: spaces){
-            st.insert(it);
-        }
+        int idx = 0;
         string ans = "";
         for(int i=0;i<s.size();i++){
-            if(st.count(i)){
+            if(idx<spaces.size() && i==spaces[idx]){
                 ans.push_back(' ');
                 ans.push_back(s[i]);
+                idx++;
             }else{
                 ans.push_back(s[i]);
             }
