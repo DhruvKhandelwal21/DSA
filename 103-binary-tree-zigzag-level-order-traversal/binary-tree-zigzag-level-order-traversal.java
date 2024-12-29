@@ -24,7 +24,6 @@ class Solution {
         while (q.isEmpty() == false) {
             int n = q.size();
             Integer []arr = new Integer[n];
-            Arrays.fill(arr, 0);
             for (int i = 0; i < n; i++) {
                 TreeNode temp = q.poll();
                 if (temp.left != null)
