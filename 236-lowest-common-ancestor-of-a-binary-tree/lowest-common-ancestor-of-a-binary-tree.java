@@ -8,44 +8,37 @@
  * }
  */
 class Solution {
-    private HashMap<TreeNode, ArrayList<TreeNode>> map = new HashMap<>();
+    private HashMap<TreeNode, TreeNode> map = new HashMap<>();
     public void solve(TreeNode root){
         if(root==null) return;
         if(root.left!=null){
-            ArrayList<TreeNode> childList = new ArrayList<>();
-            childList.add(root.left);
-            if (map.containsKey(root)) {
-                childList.addAll(map.get(root));
-            }
-            map.put(root.left, childList);
+            map.put(root.left, root);
             solve(root.left);
         }
         if(root.right!=null){
-            ArrayList<TreeNode> childList = new ArrayList<>();
-            childList.add(root.right);
-            if (map.containsKey(root)) {
-                childList.addAll(map.get(root));
-            }
-            map.put(root.right, childList);
+            map.put(root.right, root);
             solve(root.right);
         }
         return;
     }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(root==null) return null;
-        map.put(root, new ArrayList<>(List.of(root)));
+        map.put(root, null);
         solve(root);
-        ArrayList<TreeNode> temp1 = map.get(p);
-        ArrayList<TreeNode> temp2 = map.get(q);
-        System.out.println(temp1);
-        System.out.println(temp2);
-        
-        for (TreeNode node1 : temp1) {
-            for (TreeNode node2 : temp2) {
-                if (node1 == node2) {
-                    return node1;
-                }
-            }
+        HashSet<TreeNode> ancestor = new HashSet<>();
+        ancestor.add(p);
+        TreeNode temp1 = p;
+        while(p!=null){
+          TreeNode x = map.get(p);
+          ancestor.add(x);
+          p = x;
+        }
+        System.out.println(ancestor);
+        while(q!=null){
+            TreeNode x = map.get(q);
+            if(ancestor.contains(q)) return q;
+            if(ancestor.contains(x)) return x;
+            q = x;
         }
         return null;
     }
