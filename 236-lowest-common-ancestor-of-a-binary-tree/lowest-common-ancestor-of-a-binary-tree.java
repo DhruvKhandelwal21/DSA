@@ -22,24 +22,34 @@ class Solution {
         return;
     }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root==null) return null;
-        map.put(root, null);
-        solve(root);
-        HashSet<TreeNode> ancestor = new HashSet<>();
-        ancestor.add(p);
-        TreeNode temp1 = p;
-        while(p!=null){
-          TreeNode x = map.get(p);
-          ancestor.add(x);
-          p = x;
+        if(root==null || root==p || root==q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if(left==null){
+            return right;
+        }else if(right==null){
+            return left;
+        }else{
+            return root;
         }
-        System.out.println(ancestor);
-        while(q!=null){
-            TreeNode x = map.get(q);
-            if(ancestor.contains(q)) return q;
-            if(ancestor.contains(x)) return x;
-            q = x;
-        }
-        return null;
+        // if(root==null) return null;
+        // map.put(root, null);
+        // solve(root);
+        // HashSet<TreeNode> ancestor = new HashSet<>();
+        // ancestor.add(p);
+        // TreeNode temp1 = p;
+        // while(p!=null){
+        //   TreeNode x = map.get(p);
+        //   ancestor.add(x);
+        //   p = x;
+        // }
+        // System.out.println(ancestor);
+        // while(q!=null){
+        //     TreeNode x = map.get(q);
+        //     if(ancestor.contains(q)) return q;
+        //     if(ancestor.contains(x)) return x;
+        //     q = x;
+        // }
+        // return null;
     }
 }
