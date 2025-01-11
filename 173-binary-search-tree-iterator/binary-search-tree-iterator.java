@@ -15,14 +15,11 @@
  */
 class BSTIterator {
     private Stack<TreeNode> st = new Stack<>();
-    private ArrayList<Integer> arr = new ArrayList<>();
-    private int idx = 0;
     public void inorder(TreeNode root){
-        if(root==null) return;
-        inorder(root.left);
-        arr.add(root.val);
-        inorder(root.right);
-        return;
+        while(root!=null){
+            st.push(root);
+            root = root.left;
+        }
     }
 
     public BSTIterator(TreeNode root) {
@@ -30,14 +27,14 @@ class BSTIterator {
     }
     
     public int next() {
-        int ans = arr.get(idx);
-        idx++;
-        return ans;
+        TreeNode temp = st.pop();
+        inorder(temp.right);
+        return temp.val;
     }
     
     public boolean hasNext() {
-        if(idx>=arr.size()) return false;
-        return true;
+        if(!st.isEmpty()) return true;
+        return false;
     }
 }
 
