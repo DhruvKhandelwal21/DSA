@@ -28,10 +28,10 @@ class Solution {
                 smallestIdx = mid;
                 break;
             }
-            if (nums[mid]>=nums[lo]) {
-                lo = mid + 1;
-            }else if(nums[mid] <= nums[hi]){
-                hi = mid - 1;
+            if (nums[mid]<=nums[lo]) {
+                hi = mid;
+            }else if(nums[hi] <= nums[mid]){
+                lo = mid;
             }
         }
     
