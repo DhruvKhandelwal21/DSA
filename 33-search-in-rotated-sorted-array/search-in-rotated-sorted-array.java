@@ -30,8 +30,8 @@ class Solution {
             }
             if (nums[mid]<=nums[lo]) {
                 hi = mid;
-            }else if(nums[hi] <= nums[mid]){
-                lo = mid;
+            }else if(nums[hi] < nums[mid]){
+                lo = mid+1;
             }
         }
     
