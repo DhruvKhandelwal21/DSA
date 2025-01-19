@@ -35,11 +35,12 @@ class Solution {
             int mn = q.peek().idx, mx = 0;
             for (int i = 0; i < n; i++) {
                 Tuple temp = q.poll();
+                int currId = temp.idx-mn;
                 if (temp.node.left != null) {
-                    q.offer(new Tuple(temp.node.left, 2 * (temp.idx - 1) + 1));
+                    q.offer(new Tuple(temp.node.left, 2 * (currId) + 1));
                 }
                 if (temp.node.right != null) {
-                    q.offer(new Tuple(temp.node.right, 2 * (temp.idx - 1) + 2));
+                    q.offer(new Tuple(temp.node.right, 2 * (currId) + 2));
                 }
                 mx = temp.idx;
             }
