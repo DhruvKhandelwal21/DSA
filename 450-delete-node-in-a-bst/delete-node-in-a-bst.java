@@ -14,34 +14,33 @@
  * }
  */
 class Solution {
-    TreeNode parent = null;
-    public TreeNode helper(TreeNode delNode){
-        if(delNode.left==null && delNode.right==null){
-            return null;
+    TreeNode parent;
+    public TreeNode solve(TreeNode root){
+        if(root.left==null && root.right==null) return null;
+        
+        if(root.left==null){
+            return root.right;
         }
-        if(delNode.right==null){
-            return delNode.left;
+        if(root.right==null){
+            return root.left;
         }
-        if(delNode.left==null){
-            return delNode.right;
-        }
-        TreeNode ans = findRight(delNode.left);
-        ans.right = delNode.right;
-        return delNode.left;
+        TreeNode temp = getRight(root.left);
+        temp.right = root.right;
+        return root.left;
     }
-    TreeNode findRight(TreeNode node){
-        if(node.right==null){
-            return node;
+    public TreeNode getRight(TreeNode root){
+        TreeNode temp = root;
+        while(temp.right!=null){
+            temp = temp.right;
         }
-        return findRight(node.right);
+        return temp;
     }
-
     public TreeNode deleteNode(TreeNode root, int key) {
         TreeNode temp = root;
         parent = root;
         if(root==null) return null;
         if(root.val==key){
-            return helper(root);
+            return solve(root);
         }
         while(temp!=null){
             if(temp.val>key){
@@ -51,10 +50,10 @@ class Solution {
                 parent = temp;
                 temp = temp.right;
             }else{
-                if(parent.left!=null && parent.left.val==temp.val){
-                    parent.left = helper(temp);
+             if(parent.left!=null && parent.left.val==temp.val){
+                    parent.left = solve(temp);
                 }else if(parent.right!=null && parent.right.val==temp.val){
-                    parent.right = helper(temp);
+                    parent.right = solve(temp);
                 }
                 break;
             }
