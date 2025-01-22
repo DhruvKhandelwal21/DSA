@@ -8,48 +8,17 @@
  * }
  */
 class Solution {
-    private HashMap<TreeNode, TreeNode> map = new HashMap<>();
-    public void solve(TreeNode root){
-        if(root==null) return;
-        if(root.left!=null){
-            map.put(root.left, root);
-            solve(root.left);
-        }
-        if(root.right!=null){
-            map.put(root.right, root);
-            solve(root.right);
-        }
-        return;
-    }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root==null || root==p || root==q) return root;
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if(left==null){
-            return right;
-        }else if(right==null){
-            return left;
+        if(root==p || root==q || root==null)return root;
+        TreeNode temp1 = lowestCommonAncestor(root.left, p, q);
+        TreeNode temp2 = lowestCommonAncestor(root.right, p, q);
+        if(temp1==null){
+            return temp2;
+        }else if(temp2==null){
+            return temp1;
         }else{
             return root;
         }
-        // if(root==null) return null;
-        // map.put(root, null);
-        // solve(root);
-        // HashSet<TreeNode> ancestor = new HashSet<>();
-        // ancestor.add(p);
-        // TreeNode temp1 = p;
-        // while(p!=null){
-        //   TreeNode x = map.get(p);
-        //   ancestor.add(x);
-        //   p = x;
-        // }
-        // System.out.println(ancestor);
-        // while(q!=null){
-        //     TreeNode x = map.get(q);
-        //     if(ancestor.contains(q)) return q;
-        //     if(ancestor.contains(x)) return x;
-        //     q = x;
-        // }
-        // return null;
+
     }
 }
