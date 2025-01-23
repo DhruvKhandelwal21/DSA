@@ -24,7 +24,8 @@ class Solution {
                 smallestIdx = lo;
                 break;
             }
-            if (nums[mid] <= nums[(mid + n - 1) % n] && nums[mid] <= nums[(mid + 1) % n]) {
+            if(mid>0 && mid<nums.length-1){
+if (nums[mid] < nums[mid-1] && nums[mid] < nums[mid + 1]) {
                 smallestIdx = mid;
                 break;
             } else if (nums[mid] < nums[lo]) {
@@ -32,6 +33,11 @@ class Solution {
             } else if (nums[mid] > nums[hi]) {
                 lo = mid + 1;
             }
+            }else{
+                smallestIdx = mid;
+                break;
+            }
+            
         }
         System.out.println(smallestIdx);
         if (nums[smallestIdx] == target)
