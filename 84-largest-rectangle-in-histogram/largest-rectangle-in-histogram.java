@@ -1,51 +1,57 @@
 class Pair {
-    int first, second;
-    public Pair(int first, int second) {
+    int first;
+    int second;
+    Pair(int first, int second){
         this.first = first;
         this.second = second;
-    }
+    } 
 }
-
 class Solution {
     public int largestRectangleArea(int[] heights) {
-       List<Integer> sml = new ArrayList<>();
-       List<Integer> smr = new ArrayList<>();
-       Stack<Pair> st = new Stack<>();
-       // calculating nearest smallest to left.
-       
-       for(int i=0;i<heights.length;i++){
-         while (!st.isEmpty() && st.peek().first >= heights[i]) {
-                st.pop();
-            }
-            if (st.isEmpty()) {
-                sml.add(-1);
-            } else {
-                sml.add(st.peek().second);
-            }
-            st.push(new Pair(heights[i], i));
-       }
-       st.clear();
-       // calculating nearest smallest to right.
+        int n = heights.length;
+        ArrayList<Integer> nsl = new ArrayList<>();
+        ArrayList<Integer> nsr = new ArrayList<>();
+        Stack<Pair> st = new Stack<>();
 
-        for(int i=heights.length-1;i>=0;i--){
-           while (!st.isEmpty() && st.peek().first >= heights[i]) {
+        for(int i=n-1;i>=0;i--){
+           if(st.isEmpty()){
+            nsr.add(n);
+           }else{
+            while(!st.isEmpty() && heights[i]<=st.peek().first){
                 st.pop();
             }
-            if (st.isEmpty()) {
-                smr.add(heights.length);
-            } else {
-                smr.add(st.peek().second);
+            if(st.isEmpty()){
+                nsr.add(n);
+            }else{
+                nsr.add(st.peek().second);
             }
-            st.push(new Pair(heights[i], i));
-       }
-       Collections.reverse(smr);
-       int ans = 0;
-       for(int i=0;i<heights.length;i++){
-        int width = smr.get(i)-sml.get(i)-1;
-        System.out.println(smr.get(i) + "," + sml.get(i) + "," + heights[i]);
-          ans = Math.max(ans, width*heights[i]);
-       }
-       return ans;
-       
+           }
+           st.push(new Pair(heights[i], i));
+        }
+        Collections.reverse(nsr);
+        st.clear();
+        for(int i=0;i<n;i++){
+           if(st.isEmpty()){
+            nsl.add(-1);
+           }else{
+            while(!st.isEmpty() && heights[i]<=st.peek().first){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                nsl.add(-1);
+            }else{
+                nsl.add(st.peek().second);
+            }
+           }
+           st.push(new Pair(heights[i], i));
+        }
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            System.out.println(nsr.get(i)+ " " + nsl.get(i));
+            int temp = heights[i]*(nsr.get(i)-nsl.get(i)-1);
+            ans = Math.max(ans, temp);
+        }
+        return ans;
+
     }
 }
