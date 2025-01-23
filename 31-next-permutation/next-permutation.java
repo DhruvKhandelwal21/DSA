@@ -1,28 +1,27 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        int lastHigh = Integer.MAX_VALUE;
-
-        int i = 1, n = nums.length;
-        while (i < n) {
-            if (nums[i] > nums[i - 1]) {
+        int lastHigh= -1;
+        int i=1;
+        while(i<nums.length){
+            if(nums[i]>nums[i-1]){
                 lastHigh = i;
             }
             i++;
         }
-        if (lastHigh == Integer.MAX_VALUE) {
+        if(lastHigh==-1){
             Arrays.sort(nums);
             return;
         }
-        int pos = lastHigh;
-        for (int k = lastHigh; k < n; k++) {
-            if (nums[lastHigh - 1] < nums[k] && nums[k] < nums[lastHigh]) {
-                pos = k;
+        int secHigh = lastHigh-1, pos = lastHigh;
+        for(int k=lastHigh;k<nums.length;k++){
+            if(nums[k]>nums[secHigh] && nums[k]<nums[lastHigh]){
+              pos = k;
             }
         }
- 
-        int temp = nums[lastHigh - 1];
-        nums[lastHigh - 1] = nums[pos];
-        nums[pos] = temp;
+        System.out.println(secHigh);
+        int temp = nums[secHigh];
+                nums[secHigh] = nums[pos];
+                nums[pos] = temp;
         Arrays.sort(nums, lastHigh, nums.length);
     }
 }
