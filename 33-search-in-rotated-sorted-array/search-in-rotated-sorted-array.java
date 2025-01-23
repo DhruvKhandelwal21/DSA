@@ -24,18 +24,18 @@ class Solution {
                 smallestIdx = lo;
                 break;
             }
-            if (nums[(mid + n - 1) % n] >= nums[mid] && nums[(mid + 1) % n] >= nums[mid]) {
+            if (nums[mid] <= nums[(mid + n - 1) % n] && nums[mid] <= nums[(mid + 1) % n]) {
                 smallestIdx = mid;
                 break;
-            }
-            if (nums[mid]<=nums[lo]) {
-                hi = mid;
-            }else if(nums[hi] < nums[mid]){
-                lo = mid+1;
+            } else if (nums[mid] < nums[lo]) {
+                hi = mid - 1;
+            } else if (nums[mid] > nums[hi]) {
+                lo = mid + 1;
             }
         }
-    
-        if(nums[smallestIdx]==target) return smallestIdx;
+        System.out.println(smallestIdx);
+        if (nums[smallestIdx] == target)
+            return smallestIdx;
         int p1 = applyBinarySearch(nums, 0, smallestIdx - 1, target);
         int p2 = applyBinarySearch(nums, smallestIdx + 1, nums.length - 1, target);
         if (p1 != -1)
