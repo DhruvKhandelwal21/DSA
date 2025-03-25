@@ -4,6 +4,7 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function Template for C++
 class DisjointSet {
 	    vector<int> rank, parent, size;
@@ -54,32 +55,33 @@ class DisjointSet {
 	          }
 	      }
 	};
+
 class Solution {
   public:
     int Solve(int n, vector<vector<int>>& edge) {
-       DisjointSet ds(n);
-       vector<int> vis(n,0);
-       int extEdges = 0, unvisited = -1;
-       for(int i=0;i<edge.size();i++){
-           int s = edge[i][0];
-           int d = edge[i][1];
-           int pars = ds.findUpar(s);
-           int pard = ds.findUpar(d);
-           if(pars!=pard){
-               ds.unionBySize(s,d);
-               vis[s] = 1;
-               vis[d] = 1;
-           }else {
-              extEdges++; 
-           }
-       }
-       for(int i=0;i<vis.size();i++){
-           if(i==ds.findUpar(i)) unvisited++;
-       }
-       if(extEdges>=unvisited) return unvisited;
-       return -1;
+        DisjointSet ds(n);
+        vector<int> vis(n,0);
+        int extraEdges = 0, ans = 0;
+        for(int i=0;i<edge.size();i++){
+            int s = edge[i][0];
+            int v = edge[i][1];
+            int pars = ds.findUpar(s);
+            int parv = ds.findUpar(v);
+            if(pars!=parv){
+                ds.unionBySize(s,v);
+            }else{
+                extraEdges++;
+            }
+        }
+        int nodes = -1;
+        for(int i=0;i<n;i++){
+            if(i==ds.findUpar(i)) nodes++;
+        }
+        if(extraEdges>=nodes) return nodes;
+        return -1;
     }
 };
+
 
 //{ Driver Code Starts.
 
@@ -103,7 +105,9 @@ int main() {
 
         Solution Obj;
         cout << Obj.Solve(n, adj) << "\n";
-    }
+    
+cout << "~" << "\n";
+}
     return 0;
 }
 // } Driver Code Ends
