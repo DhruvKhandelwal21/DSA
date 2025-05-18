@@ -1,21 +1,26 @@
 class Solution(object):
     def combinationSum(self, candidates, target):
-        fuckThisAns=[]
-        def fuckThisWorld(idx, target, temp):
-            if idx==len(candidates):
-                if target==0:
-                    fuckThisAns.append(temp[:])
+        cache = set()
+        temp = []
+        ans = []
+        n = len(candidates)
+        def solve(idx, total):
+            if total ==target:
+                cache.add(tuple(sorted(temp[:])))
                 return
-            
-            if candidates[idx] <= target:
-                temp.append(candidates[idx])
-                fuckThisWorld(idx, target-candidates[idx], temp)
-                temp.pop()
-            fuckThisWorld(idx+1, target, temp)
+            if idx >= n or total > target:
+                return
+
+            temp.append(candidates[idx])
+            solve(idx, total + candidates[idx])
+            temp.pop()
+            solve(idx+1, total)
         
-        fuckThisWorld(0,target, [])
-        
-        return fuckThisAns
+        solve(0,0)
+        unique_lists = [list(t) for t in cache]
+        return unique_lists
+
+
         """
         :type candidates: List[int]
         :type target: int
