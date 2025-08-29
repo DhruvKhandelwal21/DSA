@@ -13,11 +13,26 @@ class Solution {
     public int minDistance(String word1, String word2) {
         int n = word1.length();
         int m = word2.length();
-        int [][]dp = new int[n+1][m+1];
-        for(int i=0;i<=n;i++){
-            Arrays.fill(dp[i],-1);
+        int []dp = new int[m+1];
+  
+        int []prev = new int[m+1];
+        Arrays.fill(prev, 0);
+
+        
+        for(int i=1;i<=n;i++){
+            dp[0] = 0;
+            for(int j=1;j<=m;j++){
+                int ans = 0;
+                if(word1.charAt(i-1)==word2.charAt(j-1)){
+                    ans = 1 + prev[j-1];
+                }else{
+                    ans = Math.max(prev[j], dp[j-1]);
+                }
+                dp[j] = ans;
+            }
+            prev = dp.clone();
         }
-        int longestCommonSubsequence = solve(word1, word2, n, m, dp);
-        return n + m - 2*longestCommonSubsequence;
+        // int longestCommonSubsequence = solve(word1, word2, n, m, dp);
+        return n + m - 2*prev[m];
     }
 }
